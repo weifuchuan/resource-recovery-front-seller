@@ -1,0 +1,113 @@
+/seller/order/get # 获取订单数据
+  c -> s: data={lastId: Int, count: Int}
+    s -> c: data={ok: Boolean, orders:[Order]}
+
+/seller/order/create
+  c -> s: data={ contact: Contact, appointAt: { date: this.date, time: this.time, }, plan: { subClazzes: [{ name: String, weight: Double, price: Double}]
+    s -> c: data={ok: Boolean, order?: Order, error?: ?}
+
+/seller/order/cancel
+  c -> s: data={orderId: Int}
+    s -> c: data={ok: Boolean}
+
+/seller/order/confirm
+  c -> s: data={orderId: Int}
+     s -> c: data={ok: Boolean}
+
+/seller/contact/get
+  c -> s: data={sellerId: Int}
+    s -> c: data=[Contact]
+
+/seller/contact/add
+  c -> s: data={}: Contact
+    s -> c: data={ok: Boolean, id: Int}
+
+/seller/contact/modify
+  c -> s: data={}: Contact
+    s -> c: data={ok: Boolean}
+
+
+types:
+
+def Order: {
+   id: 0,
+   createAt: '',
+   contact: {
+     name: '',
+     phone: '',
+     address: {
+       point: {
+         lng: 0,
+         lat: 0
+       },
+       address: '',
+       addressComponents: {
+         streetNumber: '',
+         street: '',
+         district: '',
+         city: '',
+         province: ''
+       },
+       detail: ""
+     }
+   },
+   recycler: {
+     name: '',
+     phone: '',
+     address: {
+       point: {
+         lng: 0,
+         lat: 0
+       },
+       address: '',
+       addressComponents: {
+         streetNumber: '',
+         street: '',
+         district: '',
+         city: '',
+         province: ''
+       },
+       detail: ""
+     }
+   },
+   appointAt: {
+     date: '',
+     time: 0,
+   },
+   money: 0, // 最终成交额
+   completed: false,
+   sellerConfirm: false,
+   recyclerConfirm: false,
+   canceled: false,
+   plan: {
+     subClazzes: [
+       {
+         name: '',
+         price: 0,
+         weight: 0,
+       }
+     ]
+   }
+}
+
+def Contact: {
+   id: 1,
+   sellerId?: Int,
+   name: '韦幅川1',
+   phone: '18219886375',
+   address: {
+     point: {
+       lng: 110.06673,
+       lat: 25.105625
+     },
+     address: '北京市海淀区北四环中路257号',
+     addressComponents: {
+       streetNumber: '257号',
+       street: '北四环中路',
+       district: '海淀区',
+       city: '北京市',
+       province: '北京市'
+     },
+     detail: "某某之旁"
+   }
+}
